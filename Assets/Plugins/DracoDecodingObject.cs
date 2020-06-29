@@ -19,6 +19,7 @@
  * Or you can do something like the following in script:
  * AddComponent<MeshFilter>();
  */
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -35,6 +36,8 @@ using UnityEngine.Events;
 public class DracoDecodingObject : MonoBehaviour
 {
     private Texture texture;
+    [SerializeField] private string obj;
+    [SerializeField] private string httpReq;
 
 
     // This function will be used when the GameObject is initialized.
@@ -72,14 +75,45 @@ public class DracoDecodingObject : MonoBehaviour
         if (numFaces > 0)
         {
             GetComponent<MeshFilter>().mesh = mesh[0];
-            gameObject.transform.localScale = new Vector3(5f, 5f, 5f);
-            gameObject.transform.localRotation = new Quaternion(-0.7071f, 0, 0, 0.7071f);
-            gameObject.transform.localRotation = new Quaternion(0, -0.7071f, 0, 0.7071f);
+            //gameObject.transform.localScale = new Vector3(5f, 5f, 5f);
+           // gameObject.transform.localRotation = new Quaternion(-0.7071f, 0, 0, 0.7071f);
+           // gameObject.transform.localRotation = new Quaternion(0, -0.7071f, 0, 0.7071f);
             Material matmat = new Material(Shader.Find("Standard"));
-            matmat.name = "BorderLands";
-            Texture texture = Resources.Load<Texture>("BorderlandsCosplay/Borderlands_cosplay-obj_0");
-            gameObject.GetComponent<Renderer>().material = matmat;
-            gameObject.GetComponent<Renderer>().material.mainTexture = texture;
+            if (obj == "Lion")
+            {
+                matmat.name = "Lion";
+                Texture texture = Resources.Load<Texture>("Lion/AsparnLoewe_C_AsparnLoewe_O_Material_u1_v1");
+                gameObject.GetComponent<Renderer>().material = matmat;
+                gameObject.GetComponent<Renderer>().material.mainTexture = texture;
+            }
+            if (obj == "Horse")
+            {
+                matmat.name = "Horse";
+                Texture texture = Resources.Load<Texture>("Lion/AsparnLoewe_C_AsparnLoewe_O_Material_u1_v1");
+                gameObject.GetComponent<Renderer>().material = matmat;
+                gameObject.GetComponent<Renderer>().material.mainTexture = texture;
+            }
+            if (obj == "BronzeCat")
+            {
+                matmat.name = "BronzeCat";
+                Texture texture = Resources.Load<Texture>("Cat/model");
+                gameObject.GetComponent<Renderer>().material = matmat;
+                gameObject.GetComponent<Renderer>().material.mainTexture = texture;
+            }
+            if (obj == "Putti")
+            {
+                matmat.name = "Putti";
+                Texture texture = Resources.Load<Texture>("Putti/Putti_Burggarten_C_Putti_Burggarten_O_Material_u1_v1");
+                gameObject.GetComponent<Renderer>().material = matmat;
+                gameObject.GetComponent<Renderer>().material.mainTexture = texture;
+            }
+            if (obj == "Sphinx")
+            {
+                matmat.name = "Sphinx";
+                Texture texture = Resources.Load<Texture>("Sphinx/Sphinx2_C_Sphinx2_Material_u1_v1");
+                gameObject.GetComponent<Renderer>().material = matmat;
+                gameObject.GetComponent<Renderer>().material.mainTexture = texture;
+            }
         }
 
         stW.Stop();
@@ -117,16 +151,29 @@ public class DracoDecodingObject : MonoBehaviour
         DracoMeshLoader dracoLoader = new DracoMeshLoader();
        
         stW.Start();
-        int numFaces = dracoLoader.LoadMeshFromAsset("BorderlandsCosplay/Borderlands16qp.drc", ref mesh);
+        int numFaces = dracoLoader.LoadMeshFromAsset("Lion/LionFull.drc", ref mesh);
        
         if (numFaces > 0)
         {
+            var verti =  mesh[0].vertices;
+
+            for (var v = 0; v < verti.Length; v++)
+            {
+                verti[v].z -= 10f;
+            }
             GetComponent<MeshFilter>().mesh = mesh[0];
-            gameObject.transform.localScale = new Vector3(2f, 2f, 2f);
-            gameObject.transform.localRotation = new Quaternion(-0.7071f, 0, 0, 0.7071f);
+            GetComponent<MeshFilter>().mesh.name = "Lion";
+
+            
+
+ 
+           
+
+           // gameObject.transform.localScale = new Vector3(2f, 2f, 2f);
+           // gameObject.transform.localRotation = new Quaternion(-0.7071f, 0, 0, 0.7071f);
             Material matmat = new Material(Shader.Find("Standard"));
-            matmat.name = "BorderLands";
-            Texture texture = Resources.Load<Texture>("BorderlandsCosplay/Borderlands_cosplay-obj_0");
+            matmat.name = "Lion";
+            Texture texture = Resources.Load<Texture>("Lion/AsparnLoewe_C_AsparnLoewe_O_Material_u1_v1");
             gameObject.GetComponent<Renderer>().material = matmat;
             gameObject.GetComponent<Renderer>().material.mainTexture = texture;
         }
@@ -150,10 +197,10 @@ public class DracoDecodingObject : MonoBehaviour
         7- https://perso.liris.cnrs.fr/guillaume.lavoue/Compressed/Dragonfly16qp.drc.bytes
         8- https://perso.liris.cnrs.fr/guillaume.lavoue/Compressed/TigerFighter16qp.drc.bytes
 */
-    void IniziamoInternet()
+   public void IniziamoInternet()
     {
-        string a = "https://perso.liris.cnrs.fr/guillaume.lavoue/Compressed/Napoleon16qp.drc.bytes";  
-        StartCoroutine(GetWWWFile(a));
+       // string a = "https://perso.liris.cnrs.fr/guillaume.lavoue/Compressed/Napoleon16qp.drc.bytes";  
+        StartCoroutine(GetWWWFile(httpReq));
     }
 
     private IEnumerator GetWWWFile(string a)
@@ -199,12 +246,42 @@ public class DracoDecodingObject : MonoBehaviour
         if (numFaces > 0)
         {
             GetComponent<MeshFilter>().mesh = mesh[0];
-            gameObject.transform.localScale = new Vector3(2f, 2f, 2f);
-           // Material matmat = new Material(Shader.Find("Standard"));
-            //matmat.name = "BorderLands";
-           // Texture texture = Resources.Load<Texture>("TigerFighter/TigerFighter_0");
-           // gameObject.GetComponent<Renderer>().material = matmat;
-           // gameObject.GetComponent<Renderer>().material.mainTexture = texture;
+            Material matmat = new Material(Shader.Find("Standard"));
+            if (obj == "Lion")
+            {
+                matmat.name = "Lion";
+                Texture texture = Resources.Load<Texture>("Lion/AsparnLoewe_C_AsparnLoewe_O_Material_u1_v1");
+                gameObject.GetComponent<Renderer>().material = matmat;
+                gameObject.GetComponent<Renderer>().material.mainTexture = texture;
+            }
+            if (obj == "Horse")
+            {
+                matmat.name = "Horse";
+                Texture texture = Resources.Load<Texture>("Lion/AsparnLoewe_C_AsparnLoewe_O_Material_u1_v1");
+                gameObject.GetComponent<Renderer>().material = matmat;
+                gameObject.GetComponent<Renderer>().material.mainTexture = texture;
+            }
+            if (obj == "BronzeCat")
+            {
+                matmat.name = "BronzeCat";
+                Texture texture = Resources.Load<Texture>("Cat/model");
+                gameObject.GetComponent<Renderer>().material = matmat;
+                gameObject.GetComponent<Renderer>().material.mainTexture = texture;
+            }
+            if (obj == "Putti")
+            {
+                matmat.name = "Putti";
+                Texture texture = Resources.Load<Texture>("Putti/Putti_Burggarten_C_Putti_Burggarten_O_Material_u1_v1");
+                gameObject.GetComponent<Renderer>().material = matmat;
+                gameObject.GetComponent<Renderer>().material.mainTexture = texture;
+            }
+            if (obj == "Sphinx")
+            {
+                matmat.name = "Sphinx";
+                Texture texture = Resources.Load<Texture>("Sphinx/Sphinx2_C_Sphinx2_Material_u1_v1");
+                gameObject.GetComponent<Renderer>().material = matmat;
+                gameObject.GetComponent<Renderer>().material.mainTexture = texture;
+            }
         }
 
         stW.Stop();

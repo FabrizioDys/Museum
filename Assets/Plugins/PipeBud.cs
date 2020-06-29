@@ -84,7 +84,7 @@ public class PipeBud : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(pipeName);
+       // Debug.Log(pipeName);
         if(!shutdown)
             StartCoroutine("PipeClient");
         if (Input.GetKeyDown(KeyCode.X) || nOfReads == 6)

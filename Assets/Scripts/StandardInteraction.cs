@@ -27,7 +27,7 @@ public class StandardInteraction : InteractDesk
     public bool checki = false;
 
     //private string objFileName = "ftp://projetvr:9tUv55WX.@iutbg-lacielp.univ-lyon1.fr:21/projetvr/";
-    private string objFileName = "https://perso.liris.cnrs.fr/guillaume.lavoue/Textured/TigerFighter.obj/obj/TigerFighter.obj";
+    private string objFileName = "https://perso.liris.cnrs.fr/guillaume.lavoue/Compressed/";
     public Material standardMaterial;   // The shader for non-transparent objects is supplied by this material. Also used for objects that have no MTL file.
     ObjReader.ObjData objData;
     string loadingText = "";
@@ -63,7 +63,7 @@ public class StandardInteraction : InteractDesk
                 //Task obTask = Task.Run(() => Load());
                 StartCoroutine(Load());
                 StartCoroutine(check());
-                Debug.Log("{1} " + free);
+                //Debug.Log("{1} " + free);
 
             }
 

@@ -55,7 +55,8 @@ public class startSimulation : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        process.Kill();
+       
+            process.Kill();
        
     }
 }
